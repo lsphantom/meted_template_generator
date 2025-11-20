@@ -1,0 +1,1067 @@
+
+{
+  "menu": [
+    {
+      "page": "1-0-0",
+      "title": "Available Satellite Products for Polar Regions",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "“Full Disk” geostationary satellite views give extensive temporal and spatial coverage north and south of the equator, but very limited coverage and a lack of detail toward the poles as seen below. "
+            }
+          ]
+        },
+        {
+          "tabs": [
+            {
+              "title": "GOES-18 LW IR (Geostationary View)",
+              "content": [
+                {
+                  "type": "mediaItem",
+                  "caption": "",
+                  "id": "87025"
+                }
+              ]
+            },
+            {
+              "title": "GOES-18 LW IR (Polar View)",
+              "content": [
+                {
+                  "type": "mediaItem",
+                  "caption": "",
+                  "id": "87026"
+                }
+              ]
+            }
+          ],
+          "type": "tab"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Specialized RGB products like the Air Mass and many other RGB images are not available at the poles or higher latitudes due to the lack of coverage from geostationary satellites.  The Visible Infrared Imaging Radiometer Suite (VIIRS), on the Suomi National Polar-orbiting Partnership (S-NPP), NOAA-20, -21 and future JPSS-3 and -4 satellites, observes in 22 visible and infrared wavelengths, making animations like the following longwave IR loop possible."
+            }
+          ]
+        },
+        {
+          "type": "mediaItem",
+          "caption": "Longwave 10.763 µm IR image from VIIRS, Northern Hemisphere perspective.",
+          "id": "87027"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "VIIRS, unfortunately, does not have water vapor bands making the Air Mass and SO"
+            },
+            {
+              "type": [
+                "subscript"
+              ],
+              "text": "2"
+            },
+            {
+              "type": "text",
+              "text": " RGBs impossible to build since the recipes both call for water vapor bands.  However, the "
+            },
+            {
+              "link": "https://www.star.nesdis.noaa.gov/jpss/CrIS.php",
+              "type": [
+                "link",
+                "underline"
+              ],
+              "text": "Cross-Track Infrared Sounder (CrIS)"
+            },
+            {
+              "type": "text",
+              "text": ", on the same satellites, provides data through all of the infrared spectrum including those same water vapor bands and can also be used at high latitudes because it is on a polar-orbiting satellite.  Thus, the Air Mass and SO"
+            },
+            {
+              "type": [
+                "subscript"
+              ],
+              "text": "2 "
+            },
+            {
+              "type": "text",
+              "text": "RGBs can be produced with this type of dataset.  "
+            }
+          ]
+        },
+        {
+          "type": "mediaItem",
+          "caption": "The Cross-track Infrared Sounder (CrIS) for JPSS-4",
+          "id": "87028"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "With recent updates in data processing, CrIS sounding observations are now being actively used to make these single-band and RGB images over the poles, filling in the void of water vapor imagery at the poles.  Here is an example image showing you the spatial resolution of the CrIS water vapor band compared to the same band from GOES satellites. It also provides a nice comparison of the increased polar coverage from the polar-orbiting satellite."
+            }
+          ]
+        },
+        {
+          "type": "sweeper",
+          "content": {
+            "before": "87029",
+            "after": "87030"
+          }
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "At latitudes poleward of 65˚, GOES resolution degrades rapidly, and imagery suffers from limb cooling causing the much cooler “cloud tops” in the GOES imagery as well as parallaxing effects that offset features northward/away from the satellite’s location above the equator. Use the slider above to note these differences.  "
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "These newly-introduced CrIS images can be made for single bands like shown above, and can also be used to make the RGB images you are accustomed to with GOES data and until now were missing with the VIIRS imager.  "
+            }
+          ]
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Polar-orbiting satellites provide detailed information northward and including the Alaska North Slope with greater spatial accuracy than GOES satellites.  Although polar-orbiting satellites may not have as good of temporal resolution as GOES satellites, CrIS imagery/products become the go-to product nearer the poles, and now you can use these imagery and products more like you would expect from lower latitudes.  "
+                }
+              ]
+            }
+          ],
+          "questionContent": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Comparing GOES imagery/products to CrIS imagery/products, which product would be best for each of the following scenarios.  "
+                }
+              ]
+            },
+            {
+              "type": "mediaItem",
+              "caption": "",
+              "id": "#####"
+            }
+          ],
+          "questions": [
+            {
+              "question": "Accurately locating a polar low north of the Alaska North Slope _____",
+              "dropdowns": [
+                {
+                  "correct": 1,
+                  "answers": [
+                    "GOES",
+                    "CrIS",
+                    "Both"
+                  ]
+                }
+              ]
+            },
+            {
+              "question": "Monitoring cyclogenesis north of the Alaska North Slope _____",
+              "dropdowns": [
+                {
+                  "correct": 1,
+                  "answers": [
+                    "GOES",
+                    "CrIS",
+                    "Both",
+                    "Dropdown 1"
+                  ]
+                }
+              ]
+            },
+            {
+              "question": "Overcoming limb cooling effects at high viewing angles _____",
+              "dropdowns": []
+            },
+            {
+              "question": "Monitoring Extratropical transition over the Bering Sea _____",
+              "dropdowns": [
+                {
+                  "correct": 2,
+                  "answers": [
+                    "GOES",
+                    "CrIS",
+                    "Both"
+                  ]
+                }
+              ]
+            }
+          ],
+          "type": "selectQuestion"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "The NOAA-20, -21, and S-NPP orbits are separated by 25 to 50-minutes, and therefore, imagery is available every 25 to 50 minutes at certain times. However, there are times where there is no coverage from these satellites stretching up to 12 hours, so looping composite images from all of these satellites can be extremely important for your temporal understanding.  At nadir, the resolution of the CrIS imagery is 14 km, so not on par with GOES spatial resolution (0.5 to 2 km), yet certainly better than having no available data to work with when trying to make real-time or near-real-time analyses and forecasts."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Coming up next is your opportunity to use CrIS WV and Air Mass RGB products to practice your satellite analysis skills. "
+            }
+          ]
+        },
+        {
+          "title": "Available Analysis Resources",
+          "type": "panel",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "If you are confident with WV and Air Mass RGB interpretation, you can apply your knowledge to these exercises. If you need refreshers, you can access the Quick Guides on the left hand navigation bar or the same links below: "
+                }
+              ]
+            },
+            {
+              "glyph": "BULLET",
+              "type": "listSet",
+              "level": 0,
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band10.pdf",
+                        "type": [
+                          "link",
+                          "underline"
+                        ],
+                        "text": "Lower-level WV Quick Guide"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "content": {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band09.pdf",
+                        "type": [
+                          "link",
+                          "underline"
+                        ],
+                        "text": "Mid-level WV Quick Guide"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "content": {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band08.pdf",
+                        "type": [
+                          "link",
+                          "underline"
+                        ],
+                        "text": "Upper-level WV Quick Guide"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "content": {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "link": "https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_GOESR_AirMassRGB_final.pdf",
+                        "type": [
+                          "link",
+                          "underline"
+                        ],
+                        "text": "Air Mass RGB Quick Guide"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "2-0-0",
+      "title": "Case 1: Atmospheric River",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "The following case gives you a clear look at an atmospheric river entering the Arctic.  "
+            }
+          ]
+        },
+        {
+          "type": "mediaItem",
+          "caption": "CrIS 6.9 µm water vapor loop valid from November 25, 2023 at 0000 UTC until November 29, 2023 at 2253 UTC",
+          "id": "87031"
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The analysis of weather systems and interpretation of the CrIS 6.9 µm WV imagery is the same as with geostationary imagery. Closed cyclonic rotations are lows, and closed anticyclonic rotations are highs.  Greater amounts of moisture are represented by the white shading and lesser amounts of moisture are darker blues into yellows. By animating the imagery, you can see the poleward movement of the atmospheric river through Greenland. The deformation zones are strongly contrasting color boundaries in the water vapor imagery.  "
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Use the arrow at right or the blue dots below to proceed to the next question."
+                }
+              ]
+            }
+          ],
+          "directions": "Indicate the location of the upper-level low and high pressure systems with red “L”s and blue “H”s, the deformation zones bounding the atmospheric river in green, and the atmospheric river motion with black vectors.",
+          "question": "Question 1 of 3Using the pens provided, draw the significant features associated with the atmospheric river seen in the highlighted area of interest. Make use of the satellite loop above to assist you with your answer. The analysis image is the last image in the above loop.",
+          "background": "87032",
+          "type": "drawQuestion",
+          "colors": [
+            "#F00",
+            "#00FFFF",
+            "#0F0",
+            "#000"
+          ],
+          "labels": [
+            "Low",
+            " High",
+            " Deformation Zones",
+            " AR Flow"
+          ]
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The atmospheric river is a narrow, elongated area with high levels of moisture and associated clouds. The band will appear as a blue color on this RGB, due to the high amount of moisture and the high latitude."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Compare the WV analysis with the same time in the Air Mass RGB below."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "INSERT SWEEPER HERE"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "For a deeper understanding, you can use the animation below."
+                }
+              ]
+            },
+            {
+              "type": "mediaItem",
+              "caption": "CrIS Air Mass RGB composite valid from November 25, 2023 at 0000 UTC until November 29, 2023 at 2253 UTC",
+              "id": "87034"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Use the arrow at right and left or the blue dots below to proceed to the next question."
+                }
+              ]
+            }
+          ],
+          "answers": [
+            "A cloud-free, narrow, elongated area with a red color",
+            "A narrow, elongated area with a deep purple color containing convective clouds",
+            "A narrow, elongated area with a green color and low level cloud",
+            "A narrow, elongated area with a blue color and whitish clouds",
+            "A narrow, elongated area with a yellow color and upper level clouds"
+          ],
+          "question": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "Question 2 of 3"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "How would this atmospheric river appear on an Air Mass RGB? (Select the best answer)"
+                }
+              ]
+            }
+          ],
+          "correct": 4,
+          "type": "radioQuestion"
+        },
+        {
+          "type": "sweeper",
+          "content": {
+            "before": "87033",
+            "after": "87035"
+          }
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The CrIS water vapor bands offer a unique viewing capability over the polar regions. When combined with infrared window imagery to create the Air Mass RGB, both water vapor and Air Mass imagery can be used to detect and monitor atmospheric rivers at high latitudes. The Air Mass RGB product is created using the same band combinations as used in the GOES RGB product and can be interpreted in the same way."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "If you use water vapor or Air Mass RGB imagery in mid-latitudes, these products provide you with another way to evaluate polar imagery with the same mentality.  For atmospheric rivers, it is also possible to use TPW (Total Precipitable Water) imagery to find atmospheric rivers reaching into Arctic or Antarctic latitudes."
+                }
+              ]
+            }
+          ],
+          "answers": [
+            "Because geostationary satellites provide complete polar coverage with higher temporal resolution",
+            "Because CrIS imagery is available in real time at 1-minute intervals over the entire globe",
+            "Because CrIS offers multispectral IR imagery in regions where geostationary coverage is limited or unavailable",
+            "Because atmospheric rivers near the poles are too small to be detected by geostationary satellite imagery"
+          ],
+          "question": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "Question 3 of 3"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Why is analyzing the CrIS WV and Air Mass RGB products useful in identifying atmospheric rivers in high-latitude areas?  Select the best answer."
+                }
+              ]
+            }
+          ],
+          "correct": 3,
+          "type": "radioQuestion"
+        }
+      ]
+    },
+    {
+      "page": "3-0-0",
+      "title": "Case 2: Polar Cyclones and Cold Fronts",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "With WV and Air Mass RGB imagery over the poles, it becomes even easier to identify polar cyclones and frontal passages as both of these products help accentuate pressure centers, vorticity centers, and airmass movements.  Use the loop below to analyze the polar cyclone centers over the Arctic region."
+            }
+          ]
+        },
+        {
+          "type": "mediaItem",
+          "caption": "CrIS 6.9 µm water vapor imagery valid from March 4, 2023 at 2357 UTC until March 9, 2023 at 0644 UTC, Northern Hemisphere perspective.",
+          "id": "87036"
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "In areas poleward of the Arctic Circle, the only NOAA water vapor products available to forecasters are from CrIS imagery. Water vapor products are very effective in detecting upper and mid-level low pressure systems, regardless of the time of day. Geostationary satellite imagery cannot effectively cover this area."
+                }
+              ]
+            }
+          ],
+          "draggables": [
+            "L"
+          ],
+          "question": "Identify the locations of any polar-region low pressure systems in the water vapor imagery provided.",
+          "directions": "Drag and drop the “L” to identify the placement of the low pressure system/s on the image. You can use the draggable L multiple times to identify all of the lows.",
+          "type": "dragQuestion",
+          "background": "87037"
+        },
+        {
+          "tabs": [
+            {
+              "title": "WV 6.9 µm",
+              "content": [
+                {
+                  "type": "mediaItem",
+                  "caption": "",
+                  "id": "87039"
+                }
+              ]
+            },
+            {
+              "title": "Air Mass RGB",
+              "content": [
+                {
+                  "type": "mediaItem",
+                  "caption": "",
+                  "id": "87040"
+                }
+              ]
+            }
+          ],
+          "type": "tab"
+        },
+        {
+          "feedback": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "\tMDG, add the first msdb entry here."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "_end_note"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "In the Air Mass RGB imagery, the cold front would be found at the boundary between the two different airmasses (Cold/Dry to the east, and Dry/Warm to the west) and ahead of the leading shortwave as noted with the blue line on the feedback imagery. Although this pattern is backwards at this sensing level, the low-level airmasses would be cold/dry to the east, and colder and drier to the west due to the lowered tropopause to the west.  "
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "\tMDG, add the second msdb entry here."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": [
+                    "bold"
+                  ],
+                  "text": "_end_note"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "This surface analysis chart shows the approximate position of the cold front and low pressure system. Note where the surface ridge of high pressure is moving over western Alaska. Using this in combination with your CrIS imagery will help forecasters to more accurately place and monitor the evolution of any cold fronts in high latitude regions. "
+                }
+              ]
+            }
+          ],
+          "question": "Find the position of the cold front as seen on the CrIS 6.9 µm water vapor and Air Mass RGB products.",
+          "directions": "Use the blue pen to draw a surface cold front within the rectangle.",
+          "background": "87041",
+          "type": "drawQuestion",
+          "colors": [
+            "#00F"
+          ],
+          "labels": [
+            "Cold Front"
+          ]
+        },
+        {
+          "type": "mediaItem",
+          "caption": "",
+          "id": "87042"
+        },
+        {
+          "type": "mediaItem",
+          "caption": "",
+          "id": "87043"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "The combined use of the CrIS WV imagery and the Air Mass RGB gives forecasters the ability to more accurately detect and monitor low pressure systems and cold fronts in high-latitude regions, beyond the footprint of geostationary satellite imagery. The weather systems impacting communities and economies at higher latitudes can bring hazardous conditions, including significant amounts of snowfall, blowing snow, heavy rainfall, damaging winds and very cold temperatures."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "4-0-0",
+      "title": "Summary",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "sweeper",
+          "content": {
+            "before": "87044",
+            "after": "87045"
+          }
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "CrIS imagery provides valuable detail about atmospheric temperature and moisture over the polar regions, similar to what can be seen on geostationary satellites at lower latitudes. Forecasters can currently access three WV bands, three Longwave IR bands, an Ozone band, a CO"
+            },
+            {
+              "type": [
+                "subscript"
+              ],
+              "text": "2"
+            },
+            {
+              "type": "text",
+              "text": " band, and the SO"
+            },
+            {
+              "type": [
+                "subscript"
+              ],
+              "text": "2"
+            },
+            {
+              "type": "text",
+              "text": "/Ash RGB in addition to the Air Mass RGB."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "CrIS imagery makes tracking short- and long-wave weather systems over the polar regions possible.  You can view near real-time CrIS imagery over the poles using the CIRA SLIDER by selecting the JPSS satellite from the drop-down menu and choosing "
+            },
+            {
+              "link": "https://rammb-slider.cira.colostate.edu/?sat=jpss&sec=northern_hemisphere&x=15989.0283203125&y=15987.199951171875&z=0&angle=0&im=12&ts=1&st=0&et=0&speed=130&motion=loop&maps%5Bborders%5D=white&p%5B0%5D=cris_airmass&opacity%5B0%5D=1&pause=0&slider=-1&hide_controls=0&mouse_draw=0&follow_feature=0&follow_hide=0&s=rammb-slider&draw_color=FFD700&draw_width=6",
+              "type": [
+                "link",
+                "underline"
+              ],
+              "text": "Northern Hemisphere"
+            },
+            {
+              "type": "text",
+              "text": " or "
+            },
+            {
+              "link": "https://rammb-slider.cira.colostate.edu/?sat=jpss&sec=southern_hemisphere&x=15994.5146484375&y=15993.599975585938&z=0&angle=0&im=12&ts=1&st=0&et=0&speed=130&motion=loop&maps%5Bborders%5D=white&p%5B0%5D=cris_airmass&opacity%5B0%5D=1&pause=0&slider=-1&hide_controls=0&mouse_draw=0&follow_feature=0&follow_hide=0&s=rammb-slider&draw_color=FFD700&draw_width=6",
+              "type": [
+                "link",
+                "underline"
+              ],
+              "text": "Southern Hemisphere"
+            },
+            {
+              "type": "text",
+              "text": " sectors."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "5-0-0",
+      "title": "References",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "CIRA CrIS Imagery Landing Page: "
+                  },
+                  {
+                    "link": "https://rammb2.cira.colostate.edu/research/cris-imagery/",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://rammb2.cira.colostate.edu/research/cris-imagery/"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "CrIS Imagery Quick Guide: "
+                  },
+                  {
+                    "link": "https://rammb2.cira.colostate.edu/wp-content/uploads/2025/03/JPSS_CrIS_Imagery_Quick_Guide_v2.pdf",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://rammb2.cira.colostate.edu/wp-content/uploads/2025/03/JPSS_CrIS_Imagery_Quick_Guide_v2.pdf"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "GOES Air Mass RGB Quick Guide: "
+                  },
+                  {
+                    "link": "https://weather.ndc.nasa.gov/sport/training/AppLib/3min/rgbs/airmass_falsepv_13feb2017/presentation_content/external_files/QuickGuide_AirMassRGB_GOESR_NASA_SPoRT_20180820.pdf",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://weather.ndc.nasa.gov/sport/training/AppLib/3min/rgbs/airmass_falsepv_13feb2017/presentation_content/external_files/QuickGuide_AirMassRGB_GOESR_NASA_SPoRT_20180820.pdf"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "GOES Lower-level WV Quick Guide: "
+                  },
+                  {
+                    "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band10.pdf",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band10.pdf"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "GOES Mid-level WV Quick Guide: "
+                  },
+                  {
+                    "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band09.pdf",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band09.pdf"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "GOES Upper-level WV Quick Guide: "
+                  },
+                  {
+                    "link": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band08.pdf",
+                    "type": [
+                      "link",
+                      "underline"
+                    ],
+                    "text": "https://www.star.nesdis.noaa.gov/GOES/documents/ABIQuickGuide_Band08.pdf"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "6-0-0",
+      "title": "Contributors",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Project Lead and Scientist"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Lee-ann Simpson - UCAR/COMET"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Patick Dills - UCAR/COMET"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Bryan Guarente - UCAR/COMET"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Scientific Advisors/Reviewers:"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "William Line - Physical Scientist & Imagery Product Lead, NOAA/NESDIS"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Jorel Torres - JPSS Satellite Liaison, CIRA/CSU"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Program Management"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Amy Stevermer - UCAR/COMET"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Graphics and Multimedia Development:"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Steve Deyo- UCAR/COMET"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Test"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "Using JPSS CrIS Water Vapor and Air Mass RGB Products"
+}

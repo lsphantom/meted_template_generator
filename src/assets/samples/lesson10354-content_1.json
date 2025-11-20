@@ -1,0 +1,294 @@
+{
+  "menu": [
+    {
+      "page": "1-0-0",
+      "title": "Introduction: Why GeoColor",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "The GeoColor red-blue-green (RGB) product provides an approximation of True Color imagery in the daytime, and a high-level view of what’s happening in the atmosphere. The short cases included here provide examples of the types of things discernible in GeoColor, and include large-scale views for an intuitive look at clouds, Earth’s surface, and other features, beyond what can be observed in visible imagery alone."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Select the type of applications you’d like to view first."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "/satmet/sat_apps_geocolor/geocolor_land_button_sm.jpg"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "\t\t/satmet/sat_apps_geocolor/geocolor_ocean_button_sm.jpg"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "_note\rFor programmers:\rLand button opens print2.php (Land Applications)\rOcean button opens print3.php (Ocean and Lake Applications)"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Once they complete each of those pages, they will return to this main page."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "_end_note"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Once you’ve viewed the applications and practiced identifying various phenomena and features, click to advance to the next section to learn more about  Advantages and Limitations, as well as how to access and view GeoColor imagery."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "2-0-0",
+      "title": "Advantages and Limitations",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "GeoColor offers several advantages for forecasters and others needing an overview of what’s happening in the atmosphere or on the surface."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Advantages of the GeoColor product include:"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Offers the nearest approximation to True Color imagery possible from the GOES-R series"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Provides an intuitive interpretation of meteorological and surface-based features"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Offers an IR-based multispectral product to help differentiate clouds at night and includes city lights background data for geo-referencing"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Limitations to be aware of include:"
+            }
+          ]
+        },
+        {
+          "glyph": "BULLET",
+          "type": "listSet",
+          "level": 0,
+          "content": [
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "A false coloring effect in shallow waters due to lack of a green band"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The potential for difficulty in discerning thick vs. thin clouds at night"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "listItem",
+              "content": {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "A blending or loss of enhancement of cloud features near sunrise and sunset"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page": "3-0-0",
+      "title": "Summary",
+      "children": [],
+      "innerNode": false,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "The GeoColor product provides a visual overview of features and phenomena in the atmosphere and at Earth’s surface. It is a useful tool for aiding an intuitive interpretation of both meteorological and surface features."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "GeoColor imagery can be accessed via the CIRA Slider for both Northern Hemisphere and Southern Hemisphere."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Variations of the GeoColor product are also available and include the GeoProxy product and a polar version of the GeoColor product, produced using data from VIIRS."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Resources for additional information:"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "GeoColor Quick Guide, "
+            },
+            {
+              "link": "https://rammb2.cira.colostate.edu/guides/geocolor/",
+              "type": [
+                "link",
+                "underline"
+              ],
+              "text": "https://rammb2.cira.colostate.edu/guides/geocolor/"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "VIIRS GeoColor Quick Guide"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "GeoProxy Product"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "GeoFire Product"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "No Title Found"
+}

@@ -55,6 +55,11 @@ export interface LessonPage {
   content: string
   order: number
   type: 'content' | 'quiz' | 'preassessment' | 'survey' | 'resources'
+  level: number // 1, 2, or 3 for the hierarchical structure
+  parentId?: string // ID of parent page for levels 2 and 3
+  children: LessonPage[] // Child pages for hierarchical structure
+  page?: string // Page identifier like "1-0-0", "2-1-0" etc.
+  innerNode: boolean // Whether this is a navigation node or content node
 }
 
 export interface AssetFile {

@@ -19,7 +19,7 @@ import PreviewAndExport from '../components/PreviewAndExport'
 const steps = [
   'Basic Information',
   'Template Settings',
-  'Content Pages',
+  'Content',
   'Assets & Media',
   'Preview & Export'
 ]
