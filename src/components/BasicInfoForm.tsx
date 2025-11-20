@@ -13,7 +13,8 @@ import {
   CardHeader,
   CardContent,
   Typography,
-  Stack
+  Stack,
+  Divider
 } from '@mui/material';
 import type { LessonConfig } from '../types/lesson';
 
@@ -33,7 +34,7 @@ export default function BasicInfoForm({ config, onChange }: BasicInfoFormProps) 
     <Card sx={{ mt: 2 }}>
       <CardHeader align="left"
         title="Basic Information"
-        subheader="Configure the basic template details and settings"
+        subheader="Configure the basic template details and settings."
       />
       <CardContent>
         <Stack spacing={3}>
@@ -107,8 +108,10 @@ export default function BasicInfoForm({ config, onChange }: BasicInfoFormProps) 
             helperText="Comma-separated keywords for search and categorization"
           />
 
+          <Divider />
+
           {/* Feature Options Section */}
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography variant="h6" gutterBottom color="primary">
               Additional Options
             </Typography>

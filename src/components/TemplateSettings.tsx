@@ -43,22 +43,16 @@ interface TemplateSettingsProps {
 
 const templateTypes = [
   {
+    value: 'latest_core_xapi' as const,
+    label: 'Latest Core - xAPI',
+    description: 'Latest lesson template for use in Absorb LMS or other xAPI compliant platforms. Requires compatible LMS for deployment and tracking.',
+    features: ['xAPI', 'HTML', 'jQuery', 'Bootstrap v3']
+  },
+  {
     value: 'latest_core_legacy_standard' as const,
-    label: 'Latest Core - Legacy Standard',
-    description: 'Modern core framework with traditional MetEd lesson layout and navigation',
-    features: ['Latest MetEd Core', 'Legacy compatibility', 'Standard navigation', 'Traditional layout', 'Print support']
-  },
-  {
-    value: 'latest_core_legacy_articulate' as const,
-    label: 'Latest Core - Legacy Articulate Launcher',
-    description: 'Latest core with legacy Articulate Rise launcher compatibility',
-    features: ['Latest MetEd Core', 'Articulate launcher support', 'Legacy Rise compatibility', 'Interactive elements', 'Mobile-optimized']
-  },
-  {
-    value: 'latest_core_lms_agnostic' as const,
-    label: 'Latest Core - LMS Agnostic',
-    description: 'Latest core framework designed for compatibility with any Learning Management System',
-    features: ['Latest MetEd Core', 'LMS compatibility', 'SCORM ready', 'Universal deployment', 'Standards compliant']
+    label: 'Latest Core - PHP Standard (Legacy)',
+    description: 'Legacy lesson template with latest core framework v.2 for building in deved environment and internal testing. Requires deved COMET-API and Apache server.',
+    features: ['PHP', 'HTML', 'jQuery', 'Bootstrap v3']
   }
 ];
 
@@ -93,7 +87,7 @@ export default function TemplateSettings({ config, onChange }: TemplateSettingsP
   };
 
   return (
-    <Box sx={{ maxWidth: 900, margin: '0 auto', padding: 2 }}>
+    <Box sx={{ mb: 4 }}>
       <Card>
         <CardHeader
           title="Template Settings"
@@ -117,7 +111,7 @@ export default function TemplateSettings({ config, onChange }: TemplateSettingsP
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <SettingsIcon />
-                <Typography variant="h6">Template Type</Typography>
+                <Typography variant="h6">Framework Type: </Typography>
                 <Chip 
                   label={getSelectedTemplate().label} 
                   size="small" 
@@ -131,7 +125,15 @@ export default function TemplateSettings({ config, onChange }: TemplateSettingsP
                 <FormLabel component="legend" sx={{ mb: 2 }}>
                   Choose a template for your lesson
                 </FormLabel>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: { 
+                    sm: '1fr',
+                    md: 'repeat(2, 1fr)',
+                    lg: 'repeat(2, 1fr)' 
+                  }, 
+                  gap: 2 
+                }}>
                   {templateTypes.map((template) => (
                     <Card
                       key={template.value}
@@ -142,6 +144,10 @@ export default function TemplateSettings({ config, onChange }: TemplateSettingsP
                         border: config.templateType === template.value ? 2 : 1,
                         borderColor: config.templateType === template.value ? 'primary.main' : 'divider',
                         backgroundColor: config.templateType === template.value ? 'primary.50' : 'background.paper',
+                        height: '100%',
+                        minHeight: '220px',
+                        display: 'flex',
+                        flexDirection: 'column',
                         '&:hover': {
                           borderColor: 'primary.main',
                           transform: 'translateY(-2px)',
@@ -150,38 +156,36 @@ export default function TemplateSettings({ config, onChange }: TemplateSettingsP
                       }}
                       onClick={() => handleTemplateChange(template.value)}
                     >
-                      <CardContent sx={{ p: 3 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                          <Radio
-                            checked={config.templateType === template.value}
-                            value={template.value}
-                            sx={{ mt: 0.5 }}
-                            color="primary"
-                          />
-                          <Box sx={{ flex: 1 }}>
-                            <Typography variant="h6" fontWeight="bold" gutterBottom>
-                              {template.label}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" paragraph>
-                              {template.description}
-                            </Typography>
-                            <Box>
-                              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold' }}>
-                                Features:
-                              </Typography>
-                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
-                                {template.features.map((feature, index) => (
-                                  <Chip
-                                    key={index}
-                                    label={feature}
-                                    size="small"
-                                    variant={config.templateType === template.value ? "filled" : "outlined"}
-                                    color={config.templateType === template.value ? "primary" : "default"}
-                                    sx={{ fontSize: '0.75rem' }}
-                                  />
-                                ))}
-                              </Box>
-                            </Box>
+                      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+                        <Radio
+                          checked={config.templateType === template.value}
+                          value={template.value}
+                          color="primary"
+                          size="small"
+                        />
+                        <Typography variant="subtitle1" fontWeight="bold" sx={{ flex: 1 }}>
+                          {template.label}
+                        </Typography>
+                      </Box>
+                      <CardContent sx={{ p: 2, pt: 1.5, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.4 }}>
+                          {template.description}
+                        </Typography>
+                        <Box>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', mb: 0.5, display: 'block' }}>
+                            Framework:
+                          </Typography>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 0.5, flexWrap: 'wrap', mx: 4 }}>
+                            {template.features.map((feature, index) => (
+                              <Chip
+                                key={index}
+                                label={feature}
+                                size="small"
+                                variant={config.templateType === template.value ? "filled" : "outlined"}
+                                color={config.templateType === template.value ? "primary" : "default"}
+                                sx={{ fontSize: '0.7rem', height: '22px' }}
+                              />
+                            ))}
                           </Box>
                         </Box>
                       </CardContent>

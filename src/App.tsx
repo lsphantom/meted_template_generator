@@ -8,7 +8,7 @@ import './App.css'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#1f7cf6',
     },
     secondary: {
       main: '#dc004e',
@@ -21,14 +21,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <AppBar position="static">
+        <AppBar position="absolute">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              MetEd Lesson Scaffolding Generator
+            <Typography variant="h6" component="div" sx={{ flexGrow: 0, textAlign: 'center', width: '100%' }}>
+              COMET - MetEd Lesson Template Generator
             </Typography>
           </Toolbar>
         </AppBar>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth={false} sx={{ mt: 12, mb: 4, px: 2 }}>
           <Routes>
             <Route path="/" element={<LessonBuilder />} />
           </Routes>

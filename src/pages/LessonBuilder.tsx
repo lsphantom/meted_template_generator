@@ -148,17 +148,16 @@ export default function LessonBuilder() {
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          MetEd Lesson Generator
-        </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
-          Create educational lesson templates for deployment on Apache servers with PHP.
-          This tool replaces the Yeoman generator with a modern web interface.
-        </Typography>
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Paper elevation={2} sx={{ 
+        p: 3, 
+        mb: 2, 
+        width: '100%',
+        maxWidth: '1200px',
+        minHeight: '600px'
+      }}>
         
-        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+        <Stepper activeStep={activeStep} sx={{ pt: 2, pb: 4 }}>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
