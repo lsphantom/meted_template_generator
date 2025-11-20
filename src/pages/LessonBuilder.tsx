@@ -124,7 +124,6 @@ export default function LessonBuilder() {
       case 2:
         return (
           <ContentPagesForm 
-            config={lessonConfig} 
             onChange={(updates: Partial<LessonConfig>) => setLessonConfig(prev => ({ ...prev, ...updates }))} 
           />
         )

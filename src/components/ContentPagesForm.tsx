@@ -9,587 +9,159 @@ import {
   CardActions,
   IconButton,
   Typography,
-  Divider,
-  Chip,
-  Alert,
-  Paper,
-  Stack,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Collapse
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip
 } from '@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
-  Edit as EditIcon,
-  Upload as UploadIcon,
-  Download as DownloadIcon,
-  ChevronRight as ChevronRightIcon,
-  ExpandMore as ExpandMoreIcon,
-  Article as ArticleIcon
+  FolderOpen as UnitIcon
 } from '@mui/icons-material';
-import { v4 as uuidv4 } from 'uuid';
 import type { LessonConfig, LessonPage } from '../types/lesson';
 
+interface Unit {
+  id: string;
+  title: string;
+  description?: string;
+}
+
 interface ContentPagesFormProps {
-  config: LessonConfig;
   onChange: (updates: Partial<LessonConfig>) => void;
 }
 
-export default function ContentPagesForm({ config, onChange }: ContentPagesFormProps) {
-  const [selectedPage, setSelectedPage] = useState<string | null>(null);
-  const [expandedNodes, setExpandedNodes] = useState<string[]>(['root']);
-  const [editingPage, setEditingPage] = useState<string | null>(null);
-  const [jsonImportError, setJsonImportError] = useState<string | null>(null);
-  const [jsonImportSuccess, setJsonImportSuccess] = useState<boolean>(false);
-  const [exportSuccess, setExportSuccess] = useState<boolean>(false);
-
-  const handleJsonExport = () => {
-    try {
-      const exportData = {
-        title: config.lessonTitle || 'Untitled Lesson',
-        menu: convertPagesToMenu()
-      };
-      
-      const jsonString = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${config.lessonTitle || 'lesson'}_structure.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      
-      URL.revokeObjectURL(url);
-      
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 3000);
-    } catch (error) {
-      console.error('Export failed:', error);
+export default function ContentPagesForm({ onChange }: ContentPagesFormProps) {
+  const [units, setUnits] = useState<Unit[]>([
+    {
+      id: 'unit-default',
+      title: 'Unit Title',
+      description: 'Default unit - edit or add more units as needed'
     }
-  };
+  ]);
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [newUnitTitle, setNewUnitTitle] = useState('');
+  const [newUnitDescription, setNewUnitDescription] = useState('');
 
-  const convertPagesToMenu = (): any[] => {
-    const rootPages = config.pages.filter(page => page.level === 1);
-    return rootPages.map(page => convertPageToMenuFormat(page));
-  };
-
-  const convertPageToMenuFormat = (page: LessonPage): any => {
-    const menuItem: any = {
-      page: page.page || `${page.order}-0-0`,
-      title: page.title,
-      innerNode: page.innerNode,
-      content: convertHtmlToContentArray(page.content)
-    };
-
-    // Add children if they exist
-    const children = config.pages.filter(p => p.parentId === page.id);
-    if (children.length > 0) {
-      menuItem.children = children.map(child => convertPageToMenuFormat(child));
-    } else {
-      menuItem.children = [];
-    }
-
-    return menuItem;
-  };
-
-  const convertHtmlToContentArray = (htmlContent: string): any[] => {
-    if (!htmlContent || htmlContent.trim() === '') {
-      return [{
-        type: 'paragraph',
-        content: [{
-          type: 'text',
-          text: 'No content provided.'
-        }]
-      }];
-    }
-
-    // Simple HTML to content conversion
-    // This is a basic implementation - could be enhanced for more complex HTML parsing
-    const contentArray: any[] = [];
-    
-    // Split by paragraphs
-    const paragraphs = htmlContent.split(/<\/?p>/gi).filter(p => p.trim());
-    
-    paragraphs.forEach(para => {
-      if (para.trim()) {
-        // Handle basic HTML tags
-        let processedText = para
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(/<\/?strong>/gi, '')
-          .replace(/<\/?b>/gi, '')
-          .replace(/<\/?em>/gi, '')
-          .replace(/<\/?i>/gi, '')
-          .trim();
-
-        // Check for media items
-        if (processedText.includes('Media Item ID:')) {
-          const mediaMatch = processedText.match(/Media Item ID:\s*(\w+)/);
-          if (mediaMatch) {
-            contentArray.push({
-              type: 'mediaItem',
-              caption: '',
-              id: mediaMatch[1]
-            });
-          }
-        }
-        // Check for question blocks
-        else if (processedText.includes('Interactive Question')) {
-          contentArray.push({
-            type: 'selectQuestion',
-            question: 'User-created interactive question',
-            questionContent: [{
-              type: 'paragraph',
-              content: [{
-                type: 'text',
-                text: processedText.replace('Interactive Question', '').trim()
-              }]
-            }]
-          });
-        }
-        // Regular paragraph
-        else {
-          contentArray.push({
-            type: 'paragraph',
-            content: [{
-              type: 'text',
-              text: processedText
-            }]
-          });
-        }
-      }
-    });
-
-    return contentArray.length > 0 ? contentArray : [{
-      type: 'paragraph',
-      content: [{
-        type: 'text',
-        text: 'No content provided.'
-      }]
-    }];
-  };
-
-  const handleAddPage = (level: number = 1, parentId?: string) => {
-    const pageNumber = config.pages.filter(p => p.level === level && p.parentId === parentId).length + 1;
-    const parentPage = parentId ? config.pages.find(p => p.id === parentId) : null;
-    
-    let pageIdentifier = '';
-    if (level === 1) {
-      pageIdentifier = `${pageNumber}-0-0`;
-    } else if (level === 2) {
-      const parentNum = parentPage ? parentPage.page?.split('-')[0] : '1';
-      pageIdentifier = `${parentNum}-${pageNumber}-0`;
-    } else if (level === 3) {
-      const parentNums = parentPage ? parentPage.page?.split('-') : ['1', '1'];
-      if (parentNums) {
-        pageIdentifier = `${parentNums[0]}-${parentNums[1]}-${pageNumber}`;
-      }
-    }
-
-    const newPage: LessonPage = {
-      id: uuidv4(),
-      title: `${level === 1 ? 'Page' : level === 2 ? 'Subpage' : 'Sub-subpage'} ${pageNumber}`,
-      content: '<p>Add your content here...</p>',
-      order: config.pages.length + 1,
+  // Initialize lesson configuration with default unit
+  React.useEffect(() => {
+    const lessonPages: LessonPage[] = units.map((unit, index) => ({
+      id: `${index + 1}`,
+      title: unit.title,
+      description: unit.description,
+      content: '<p>Unit content will be scaffolded in the template</p>',
+      order: index + 1,
       type: 'content',
-      level,
-      parentId,
+      level: 1,
       children: [],
-      page: pageIdentifier,
+      page: `${index + 1}-0-0`,
       innerNode: false
+    }));
+    onChange({ pages: lessonPages });
+  }, [units, onChange]);
+
+  const handleAddUnit = () => {
+    if (!newUnitTitle.trim()) return;
+
+    const newUnit: Unit = {
+      id: `unit-${Date.now()}`,
+      title: newUnitTitle.trim(),
+      description: newUnitDescription.trim() || undefined
     };
 
-    const updatedPages = [...config.pages, newPage];
+    const updatedUnits = [...units, newUnit];
+    setUnits(updatedUnits);
     
-    // If adding to a parent, update parent's children array
-    if (parentId) {
-      const parentIndex = updatedPages.findIndex(p => p.id === parentId);
-      if (parentIndex !== -1) {
-        updatedPages[parentIndex] = {
-          ...updatedPages[parentIndex],
-          children: [...updatedPages[parentIndex].children, newPage]
-        };
-      }
-    }
-
-    onChange({ pages: updatedPages });
+    // Reset form
+    setNewUnitTitle('');
+    setNewUnitDescription('');
+    setIsAddDialogOpen(false);
   };
 
-  const updatePage = (pageId: string, updates: Partial<LessonPage>) => {
-    const updatedPages = config.pages.map(page => 
-      page.id === pageId ? { ...page, ...updates } : page
-    );
-    onChange({ pages: updatedPages });
-  };
-
-  const handleDeletePage = (pageId: string) => {
-    const pageToDelete = config.pages.find(p => p.id === pageId);
-    if (!pageToDelete) return;
-
-    // Remove the page and all its children
-    const updatedPages = config.pages.filter(page => {
-      if (page.id === pageId) return false;
-      if (page.parentId === pageId) return false;
-      if (pageToDelete.children.some(child => child.id === page.id)) return false;
-      return true;
-    });
-
-    // Update parent's children array if needed
-    if (pageToDelete.parentId) {
-      const parentIndex = updatedPages.findIndex(p => p.id === pageToDelete.parentId);
-      if (parentIndex !== -1) {
-        updatedPages[parentIndex] = {
-          ...updatedPages[parentIndex],
-          children: updatedPages[parentIndex].children.filter(child => child.id !== pageId)
-        };
-      }
+  const handleDeleteUnit = (unitId: string) => {
+    // Prevent deletion if this is the only unit
+    if (units.length <= 1) {
+      alert('A template must contain at least one unit. Add another unit before deleting this one.');
+      return;
     }
 
-    onChange({ pages: updatedPages });
+    const updatedUnits = units.filter(unit => unit.id !== unitId);
+    setUnits(updatedUnits);
     
-    if (selectedPage === pageId) {
-      setSelectedPage(null);
-    }
-    if (editingPage === pageId) {
-      setEditingPage(null);
+    if (selectedUnitId === unitId) {
+      setSelectedUnitId(null);
     }
   };
 
-  const handleJsonImport = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const jsonContent = JSON.parse(e.target?.result as string);
-        
-        if (jsonContent.menu && Array.isArray(jsonContent.menu)) {
-          const convertedPages = convertMenuToPages(jsonContent.menu);
-          onChange({ pages: convertedPages });
-          setJsonImportSuccess(true);
-          setJsonImportError(null);
-          setTimeout(() => setJsonImportSuccess(false), 3000);
-        } else {
-          setJsonImportError('Invalid JSON structure. Expected a "menu" array.');
-        }
-      } catch (error) {
-        setJsonImportError('Invalid JSON file. Please check the format.');
-      }
-    };
-    reader.readAsText(file);
-  };
-
-  const convertMenuToPages = (menu: any[], parentId?: string, level: number = 1): LessonPage[] => {
-    const pages: LessonPage[] = [];
+  const renderUnitItem = (unit: Unit) => {
+    const unitIndex = units.indexOf(unit) + 1;
     
-    menu.forEach((item, index) => {
-      // Convert content array to HTML string for display
-      let contentHtml = '';
-      if (item.content && Array.isArray(item.content)) {
-        contentHtml = convertContentArrayToHtml(item.content);
-      } else if (typeof item.content === 'string') {
-        contentHtml = item.content;
-      } else {
-        contentHtml = '<p>Content structure imported - contains interactive elements</p>';
-      }
-
-      const page: LessonPage = {
-        id: uuidv4(),
-        title: item.title || `Page ${index + 1}`,
-        content: contentHtml,
-        order: index + 1,
-        type: 'content', // Default to content since we removed type selection
-        level,
-        parentId,
-        children: [],
-        page: item.page || `${index + 1}-0-0`,
-        innerNode: item.innerNode || false
-      };
-
-      pages.push(page);
-
-      // Handle children (subpages)
-      if (item.children && Array.isArray(item.children) && item.children.length > 0) {
-        const children = convertMenuToPages(item.children, page.id, level + 1);
-        page.children = children;
-        pages.push(...children);
-      }
-    });
-
-    return pages;
-  };
-
-  // Helper function to convert content array to HTML
-  const convertContentArrayToHtml = (content: any[]): string => {
-    let html = '';
-    
-    content.forEach((item) => {
-      switch (item.type) {
-        case 'paragraph':
-          html += '<p>';
-          if (item.content && Array.isArray(item.content)) {
-            item.content.forEach((textItem: any) => {
-              if (textItem.type === 'text') {
-                html += textItem.text;
-              } else if (textItem.type?.includes('link')) {
-                html += `<a href="${textItem.link}">${textItem.text}</a>`;
-              } else if (textItem.type?.includes('bold')) {
-                html += `<strong>${textItem.text}</strong>`;
-              } else if (textItem.type?.includes('subscript')) {
-                html += `<sub>${textItem.text}</sub>`;
-              } else {
-                html += textItem.text || '';
-              }
-            });
-          }
-          html += '</p>';
-          break;
-        case 'mediaItem':
-          html += `<div class="media-item">Media Item ID: ${item.id || 'Unknown'}</div>`;
-          if (item.caption) {
-            html += `<p class="caption">${item.caption}</p>`;
-          }
-          break;
-        case 'tab':
-          html += '<div class="tabs">';
-          if (item.tabs && Array.isArray(item.tabs)) {
-            item.tabs.forEach((tab: any) => {
-              html += `<div class="tab"><h4>${tab.title}</h4>`;
-              if (tab.content) {
-                html += convertContentArrayToHtml(tab.content);
-              }
-              html += '</div>';
-            });
-          }
-          html += '</div>';
-          break;
-        case 'sweeper':
-          html += `<div class="sweeper">Sweeper: Before ${item.content?.before} / After ${item.content?.after}</div>`;
-          break;
-        case 'panel':
-          html += `<div class="panel"><h4>${item.title || 'Panel'}</h4>`;
-          if (item.content) {
-            html += convertContentArrayToHtml(item.content);
-          }
-          html += '</div>';
-          break;
-        case 'listSet':
-          html += '<ul>';
-          if (item.content && Array.isArray(item.content)) {
-            item.content.forEach((listItem: any) => {
-              if (listItem.type === 'listItem' && listItem.content) {
-                html += '<li>';
-                if (listItem.content.type === 'paragraph') {
-                  html += convertContentArrayToHtml([listItem.content]);
-                }
-                html += '</li>';
-              }
-            });
-          }
-          html += '</ul>';
-          break;
-        case 'selectQuestion':
-        case 'radioQuestion':
-        case 'drawQuestion':
-        case 'dragQuestion':
-          html += `<div class="question-block">`;
-          html += `<h4>Interactive Question</h4>`;
-          if (item.question) {
-            if (typeof item.question === 'string') {
-              html += `<p>${item.question}</p>`;
-            } else if (Array.isArray(item.question)) {
-              html += convertContentArrayToHtml(item.question);
-            }
-          }
-          if (item.questionContent) {
-            html += convertContentArrayToHtml(item.questionContent);
-          }
-          html += `</div>`;
-          break;
-        default:
-          // Handle unknown content types
-          if (item.content) {
-            if (Array.isArray(item.content)) {
-              html += convertContentArrayToHtml(item.content);
-            } else if (typeof item.content === 'string') {
-              html += `<p>${item.content}</p>`;
-            }
-          }
-      }
-    });
-    
-    return html;
-  };
-
-  const buildTreeStructure = () => {
-    const rootPages = config.pages.filter(page => page.level === 1);
-    return rootPages.map(page => ({
-      ...page,
-      children: buildPageChildren(page.id)
-    }));
-  };
-
-  const buildPageChildren = (parentId: string): LessonPage[] => {
-    const children = config.pages.filter(page => page.parentId === parentId);
-    return children.map(child => ({
-      ...child,
-      children: buildPageChildren(child.id)
-    }));
-  };
-
-  const renderTreeNode = (page: LessonPage, depth: number = 0): React.ReactNode => {
-    const hasChildren = page.children && page.children.length > 0;
-    const isSelected = selectedPage === page.id;
-    const isExpanded = expandedNodes.includes(page.id);
-
     return (
-      <Box key={page.id}>
-        <ListItemButton
-          onClick={() => setSelectedPage(page.id)}
-          selected={isSelected}
-          sx={{ 
-            pl: 2 + depth * 2,
-            py: 0.5,
-            '&:hover': {
-              backgroundColor: 'action.hover'
-            }
-          }}
-        >
-          <ListItemIcon sx={{ minWidth: 32 }}>
-            <IconButton
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (hasChildren) {
-                  const newExpanded = isExpanded 
-                    ? expandedNodes.filter(id => id !== page.id)
-                    : [...expandedNodes, page.id];
-                  setExpandedNodes(newExpanded);
-                }
-              }}
-              sx={{ p: 0.25 }}
-            >
-              {hasChildren ? (
-                isExpanded ? <ExpandMoreIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />
-              ) : (
-                <ArticleIcon fontSize="small" />
-              )}
-            </IconButton>
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: isSelected ? 'bold' : 'normal' }}>
-                  {page.title}
-                </Typography>
-                <Chip
-                  size="small"
-                  label={page.page || 'No ID'}
-                  color="default"
-                  variant="outlined"
-                  sx={{ fontSize: '0.65rem', height: 20 }}
-                />
-              </Box>
-            }
-          />
-          <Box sx={{ display: 'flex', gap: 0.5 }}>
-            <IconButton
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedPage(page.id);
-                setEditingPage(page.id);
-              }}
-              sx={{ padding: 0.25 }}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeletePage(page.id);
-              }}
-              color="error"
-              sx={{ padding: 0.25 }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-            {page.level < 3 && (
-              <IconButton
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddPage(page.level + 1, page.id);
-                }}
-                color="primary"
-                sx={{ padding: 0.25 }}
-              >
-                <AddIcon fontSize="small" />
-              </IconButton>
-            )}
-          </Box>
-        </ListItemButton>
-        {hasChildren && (
-          <Collapse in={isExpanded} timeout="auto">
-            {page.children.map(child => renderTreeNode(child, depth + 1))}
-          </Collapse>
-        )}
-      </Box>
-    );
-  };
-
-  const renderTreeStructure = () => {
-    const treeData = buildTreeStructure();
-
-    return (
-      <Box sx={{ display: 'flex', gap: 1, height: '400px' }}>
-        {/* Left Panel - Tree Navigation */}
-        <Paper sx={{ width: '50%', p: 1, overflow: 'auto' }}>
-          <Typography variant="h6" sx={{ mb: 1, fontSize: '1rem' }}>
-            Page Structure
-          </Typography>
-          {treeData.length === 0 ? (
-            <Typography variant="body2" color="text.secondary">
-              No pages yet
-            </Typography>
-          ) : (
-            <List dense>
-              {treeData.map(page => renderTreeNode(page))}
-            </List>
-          )}
-        </Paper>
-
-        {/* Right Panel - Page Editor */}
-        <Paper sx={{ width: '50%', p: 1, overflow: 'auto' }}>
-          {selectedPage && editingPage === selectedPage ? (
-            <PageEditor 
-              page={config.pages.find(p => p.id === selectedPage)!}
-              onUpdate={(updates) => updatePage(selectedPage, updates)}
-              onCancel={() => {
-                setEditingPage(null);
-                setSelectedPage(null);
-              }}
-            />
-          ) : selectedPage ? (
-            <PageViewer 
-              page={config.pages.find(p => p.id === selectedPage)!}
-              onEdit={() => setEditingPage(selectedPage)}
-            />
-          ) : (
-            <Box sx={{ textAlign: 'center', py: 4 }}>
-              <Typography variant="body2" color="text.secondary">
-                Select a page to view or edit
+      <ListItemButton
+        key={unit.id}
+        sx={{ 
+          backgroundColor: selectedUnitId === unit.id ? 'action.selected' : 'transparent',
+          mb: 1,
+          borderRadius: 1,
+          border: '1px solid',
+          borderColor: 'divider'
+        }}
+        onClick={() => setSelectedUnitId(unit.id)}
+      >
+        <ListItemIcon>
+          <UnitIcon color="primary" />
+        </ListItemIcon>
+        <ListItemText 
+          primary={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                {unit.title}
               </Typography>
+              <Chip 
+                label={`Unit ${unitIndex}`} 
+                size="small" 
+                color="primary" 
+                variant="outlined" 
+              />
+              <Chip 
+                label={`print_${unitIndex}.php`} 
+                size="small" 
+                color="secondary" 
+                variant="outlined" 
+              />
             </Box>
-          )}
-        </Paper>
-      </Box>
+          }
+          secondary={
+            unit.description ? (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                {unit.description}
+              </Typography>
+            ) : (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontStyle: 'italic' }}>
+                This unit will generate a template scaffold for print_{unitIndex}.php
+              </Typography>
+            )
+          }
+        />
+        <IconButton
+          edge="end"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteUnit(unit.id);
+          }}
+          color="error"
+          disabled={units.length <= 1}
+          title={units.length <= 1 ? 'Cannot delete the last unit' : 'Delete unit'}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ListItemButton>
     );
   };
 
@@ -598,204 +170,122 @@ export default function ContentPagesForm({ config, onChange }: ContentPagesFormP
       <Card>
         <CardHeader 
           title="Content Structure" 
-          subheader="Organize your lesson content into hierarchical pages"
+          subheader="Create units that will generate template scaffolds (print.php files) for your lesson"
         />
         <CardContent>
-          {/* Import Section */}
-          <Box sx={{ mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Import Lesson Structure
-            </Typography>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Button
-                variant="outlined"
-                component="label"
-                startIcon={<UploadIcon />}
-              >
-                Import JSON
-                <input
-                  type="file"
-                  accept=".json"
-                  hidden
-                  onChange={handleJsonImport}
-                />
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<DownloadIcon />}
-                onClick={handleJsonExport}
-                disabled={config.pages.length === 0}
-              >
-                Export JSON
-              </Button>
-              <Typography variant="body2" color="text.secondary">
-                Import or export lesson structure as JSON
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Each unit you create here will generate a corresponding print.php file in your exported lesson package.
+            These serve as templates that you can fill with actual content later in a separate content management system.
+          </Typography>
+
+          {units.length === 0 ? (
+            <Box sx={{ 
+              textAlign: 'center', 
+              py: 6, 
+              backgroundColor: 'grey.50', 
+              borderRadius: 1,
+              border: '2px dashed',
+              borderColor: 'grey.300'
+            }}>
+              <UnitIcon sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                No Units Created Yet
               </Typography>
-            </Stack>
-
-            {jsonImportError && (
-              <Alert severity="error" sx={{ mt: 2 }}>
-                {jsonImportError}
-              </Alert>
-            )}
-
-            {jsonImportSuccess && (
-              <Alert severity="success" sx={{ mt: 2 }}>
-                Lesson structure imported successfully!
-              </Alert>
-            )}
-
-            {exportSuccess && (
-              <Alert severity="success" sx={{ mt: 2 }}>
-                Lesson structure exported successfully!
-              </Alert>
-            )}
-          </Box>
-
-          <Divider sx={{ my: 3 }} />
-
-          {/* Content Structure */}
-          {config.pages.length === 0 ? (
-            <Box sx={{ textAlign: 'center', py: 4 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                No pages yet. Import a lesson structure or add your first page.
+                Start by adding your first unit to scaffold your lesson structure
               </Typography>
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={() => setIsAddDialogOpen(true)}
+              >
+                Add First Unit
+              </Button>
             </Box>
           ) : (
             <Box>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Pages will appear in the lesson navigation in the hierarchical order shown below.
+              <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                Lesson Units ({units.length})
               </Typography>
               
-              {renderTreeStructure()}
+              <List sx={{ mb: 2 }}>
+                {units.map(unit => renderUnitItem(unit))}
+              </List>
+              
+              <Box sx={{ 
+                p: 2, 
+                backgroundColor: 'info.50', 
+                borderRadius: 1,
+                border: '1px solid',
+                borderColor: 'info.200'
+              }}>
+                <Typography variant="subtitle2" color="info.main" gutterBottom>
+                  📁 Generated Template Files
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Your lesson package will include: {units.map((_, index) => `print_${index + 1}.php`).join(', ')}
+                </Typography>
+              </Box>
             </Box>
           )}
         </CardContent>
         
-        <CardActions>
-          <Button
-            startIcon={<AddIcon />}
-            variant="contained"
-            onClick={() => handleAddPage(1)}
-          >
-            Add Top Level Page
-          </Button>
-        </CardActions>
-      </Card>
-    </Box>
-  );
-}
-
-// Page Editor Component
-interface PageEditorProps {
-  page: LessonPage;
-  onUpdate: (updates: Partial<LessonPage>) => void;
-  onCancel: () => void;
-}
-
-function PageEditor({ page, onUpdate, onCancel }: PageEditorProps) {
-  const [localPage, setLocalPage] = useState(page);
-
-  const handleSave = () => {
-    onUpdate(localPage);
-    onCancel();
-  };
-
-  return (
-    <Box>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Edit Page
-      </Typography>
-      
-      <Stack spacing={2}>
-        <TextField
-          fullWidth
-          label="Page Title"
-          value={localPage.title}
-          onChange={(e) => setLocalPage({ ...localPage, title: e.target.value })}
-        />
-        
-        <TextField
-          fullWidth
-          label="Page ID"
-          value={localPage.page || ''}
-          onChange={(e) => setLocalPage({ ...localPage, page: e.target.value })}
-          placeholder="e.g., 1-4-0"
-          helperText="Hierarchical page identifier (format: level1-level2-level3)"
-        />
-
-        {localPage.type === 'content' && (
-          <TextField
-            fullWidth
-            multiline
-            rows={6}
-            label="Page Content"
-            value={localPage.content || ''}
-            onChange={(e) => setLocalPage({ ...localPage, content: e.target.value })}
-            helperText="Enter the main content for this page"
-          />
+        {units.length > 0 && (
+          <CardActions>
+            <Button
+              startIcon={<AddIcon />}
+              variant="outlined"
+              onClick={() => setIsAddDialogOpen(true)}
+            >
+              Add Unit
+            </Button>
+          </CardActions>
         )}
+      </Card>
 
-        <Stack direction="row" spacing={2} sx={{ pt: 2 }}>
-          <Button variant="outlined" onClick={onCancel}>
+      {/* Add Unit Dialog */}
+      <Dialog 
+        open={isAddDialogOpen} 
+        onClose={() => setIsAddDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Add New Unit</DialogTitle>
+        <DialogContent>
+          <Box sx={{ pt: 2 }}>
+            <TextField
+              fullWidth
+              label="Unit Title"
+              value={newUnitTitle}
+              onChange={(e) => setNewUnitTitle(e.target.value)}
+              placeholder="e.g., Introduction to Weather Patterns"
+              sx={{ mb: 2 }}
+              autoFocus
+            />
+            <TextField
+              fullWidth
+              label="Unit Description (optional)"
+              value={newUnitDescription}
+              onChange={(e) => setNewUnitDescription(e.target.value)}
+              placeholder="Brief description of what this unit covers..."
+              multiline
+              rows={3}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsAddDialogOpen(false)}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleSave}>
-            Save Changes
+          <Button 
+            onClick={handleAddUnit}
+            variant="contained"
+            disabled={!newUnitTitle.trim()}
+          >
+            Add Unit
           </Button>
-        </Stack>
-      </Stack>
-    </Box>
-  );
-}
-
-// Page Viewer Component
-interface PageViewerProps {
-  page: LessonPage;
-  onEdit: () => void;
-}
-
-function PageViewer({ page, onEdit }: PageViewerProps) {
-  return (
-    <Box>
-      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-        <Typography variant="h6">
-          {page.title}
-        </Typography>
-        <Chip
-          size="small"
-          label={page.page || 'No ID'}
-          color="primary"
-          variant="outlined"
-        />
-        <Button size="small" onClick={onEdit} startIcon={<EditIcon />}>
-          Edit
-        </Button>
-      </Stack>
-      
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        <strong>Page ID:</strong> {page.page || 'Not set'}
-      </Typography>
-      
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        <strong>Level:</strong> {page.level}
-      </Typography>
-      
-      {page.content && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            <strong>Content Preview:</strong>
-          </Typography>
-          <Paper sx={{ p: 2, backgroundColor: 'grey.50' }}>
-            <Typography variant="body2">
-              {page.content.length > 200 
-                ? page.content.substring(0, 200) + '...' 
-                : page.content
-              }
-            </Typography>
-          </Paper>
-        </Box>
-      )}
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

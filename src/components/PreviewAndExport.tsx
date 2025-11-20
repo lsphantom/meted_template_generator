@@ -45,6 +45,7 @@ import {
   ContentCopy as CopyIcon
 } from '@mui/icons-material';
 import { generateLessonPackage, downloadLessonPackage } from '../utils/lessonGenerator';
+import { LatestCorePhpGenerator } from '../utils/latestCorePhpGenerator';
 import type { LessonConfig, AssetFile } from '../types/lesson';
 
 interface PreviewAndExportProps {
@@ -68,6 +69,19 @@ export default function PreviewAndExport({ config, assets }: PreviewAndExportPro
     } catch (error) {
       console.error('Error generating lesson package:', error);
       alert('Failed to generate lesson package. Please check the console for details.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleGenerateLatestCorePhp = async () => {
+    try {
+      setIsGenerating(true);
+      const generator = new LatestCorePhpGenerator(config);
+      await generator.generateLesson();
+    } catch (error) {
+      console.error('Error generating latest_core_php package:', error);
+      alert('Failed to generate latest_core_php package. Please check the console for details.');
     } finally {
       setIsGenerating(false);
     }
@@ -208,15 +222,25 @@ export default function PreviewAndExport({ config, assets }: PreviewAndExportPro
           title="Preview and Export"
           subheader="Review your lesson configuration and generate the final package"
           action={
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={isGenerating ? <CircularProgress size={20} /> : <DownloadIcon />}
-              onClick={handleGenerateAndDownload}
-              disabled={!isValid || isGenerating}
-            >
-              {isGenerating ? 'Generating...' : 'Download Package'}
-            </Button>
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+              <Button
+                variant="contained"
+                startIcon={isGenerating ? <CircularProgress size={20} /> : <DownloadIcon />}
+                onClick={handleGenerateAndDownload}
+                disabled={!isValid || isGenerating}
+              >
+                {isGenerating ? 'Generating...' : 'Standard Package'}
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={isGenerating ? <CircularProgress size={20} /> : <DownloadIcon />}
+                onClick={handleGenerateLatestCorePhp}
+                disabled={!isValid || isGenerating}
+                color="secondary"
+              >
+                {isGenerating ? 'Generating...' : 'Latest Core PHP'}
+              </Button>
+            </Box>
           }
         />
         
@@ -530,6 +554,35 @@ export default function PreviewAndExport({ config, assets }: PreviewAndExportPro
               Preview Structure
             </Button>
           </Box>
+
+          {/* Export Options Info */}
+          <Card variant="outlined" sx={{ mt: 2, backgroundColor: 'info.50' }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom color="info.main">
+                📦 Export Options
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Standard Package
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Modern responsive lesson package with interactive features. 
+                    Suitable for modern web platforms and LMS integration.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Latest Core PHP
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    MetEd-compatible PHP template with bootstrap styling and interactive components.
+                    Generates individual print_X.php files for each unit.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </CardContent>
       </Card>
 
