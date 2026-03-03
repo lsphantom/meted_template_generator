@@ -24,7 +24,7 @@ function App() {
         <AppBar position="absolute">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 0, textAlign: 'center', width: '100%' }}>
-              COMET - MetEd Lesson Template Generator
+              COMET - MetEd Template Scaffolding Builder (BETA)
             </Typography>
           </Toolbar>
         </AppBar>
